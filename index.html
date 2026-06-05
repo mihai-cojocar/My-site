@@ -78,7 +78,7 @@
             flex-direction: column;
             gap: 6px;
             padding: 10px 10px 10px 0;
-            z-index: 1100; /* Stă deasupra meniului lateral */
+            z-index: 1010;
         }
 
         .burger-btn span {
@@ -89,73 +89,89 @@
             transition: all 0.3s ease;
         }
 
-        /* Efect de transformare în X când meniul e deschis */
+        /* Transformare fluidă în X pentru butonul din header */
         .burger-btn.active span:nth-child(1) {
             transform: translateY(8px) rotate(45deg);
-            background-color: #fff;
         }
         .burger-btn.active span:nth-child(2) {
             opacity: 0;
         }
         .burger-btn.active span:nth-child(3) {
             transform: translateY(-8px) rotate(-45deg);
-            background-color: #fff;
         }
 
-        /* Slide-out Menu (Meniul din stânga) */
+        /* Full-Screen Overlay Menu */
         .side-menu {
             position: fixed;
             top: 0;
-            left: -300px;
-            width: 300px;
+            left: -100vw;
+            width: 100vw;
             height: 100vh;
-            background: rgba(13, 21, 37, 0.98);
-            backdrop-filter: blur(20px);
-            border-right: 1px solid rgba(255, 255, 255, 0.05);
-            padding: 8rem 2rem 2rem 2rem;
+            background: rgba(9, 13, 22, 0.99);
+            backdrop-filter: blur(25px);
+            padding: 2rem;
             display: flex;
             flex-direction: column;
-            gap: 1.5rem;
-            z-index: 1050;
-            transition: left 0.4s cubic-bezier(0.77,0.2,0.05,1.0);
-            box-shadow: 20px 0 40px rgba(0,0,0,0.5);
+            justify-content: center;
+            align-items: center;
+            gap: 2rem;
+            z-index: 1100; /* Stă peste header când e deschis */
+            transition: left 0.4s cubic-bezier(0.77, 0.2, 0.05, 1.0);
         }
 
         .side-menu.open {
             left: 0;
         }
 
-        .side-menu a {
+        /* Noul Buton dedicat de X din interiorul meniului */
+        .close-menu-btn {
+            position: absolute;
+            top: 1.2rem;
+            left: 2rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            padding: 10px 10px 10px 0;
+        }
+
+        .close-menu-btn span {
+            display: block;
+            width: 25px;
+            height: 2px;
+            background-color: #fff;
+        }
+
+        /* Poziționarea liniilor direct în formă de X */
+        .close-menu-btn span:nth-child(1) {
+            transform: translateY(4px) rotate(45deg);
+        }
+        .close-menu-btn span:nth-child(2) {
+            transform: translateY(-4px) rotate(-45deg);
+        }
+
+        /* Links inside Full-Screen Menu */
+        .menu-links {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .side-menu a.nav-link {
             color: var(--text-muted);
             text-decoration: none;
-            font-size: 1.2rem;
-            font-weight: 600;
-            transition: color 0.3s, padding-left 0.3s;
+            font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            transition: all 0.3s ease;
         }
 
-        .side-menu a:hover {
+        .side-menu a.nav-link:hover {
             color: var(--accent-cyan);
-            padding-left: 10px;
-        }
-
-        /* Fundalul intunecat din spatele meniului (Overlay) */
-        .menu-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: rgba(4, 7, 13, 0.6);
-            backdrop-filter: blur(4px);
-            z-index: 1040; /* Sub meniu, dar deasupra restului paginii */
-            opacity: 0;
-            pointer-events: none; /* Nu blochează site-ul când e ascuns */
-            transition: opacity 0.4s ease;
-        }
-
-        .menu-overlay.show {
-            opacity: 1;
-            pointer-events: auto; /* Devine clicabil când se vede */
+            transform: scale(1.05);
         }
 
         /* Layout Container */
@@ -479,15 +495,30 @@
         </div>
     </header>
 
-    <!-- HTML adăugat pentru Fundalul Meniului (Overlay) -->
-    <div class="menu-overlay" id="menuOverlay"></div>
-
-    <!-- Left Side Slide-out Menu -->
+    <!-- Full-Screen Overlay Menu -->
     <div class="side-menu" id="sideMenu">
-        <a href="#about" onclick="toggleMenu()">About</a>
-        <a href="#skills" onclick="toggleMenu()">Skills</a>
-        <a href="#projects" onclick="toggleMenu()">Projects</a>
-        <a href="#contact" onclick="toggleMenu()">Contact</a>
+        <!-- BUTON NOU: X-ul din interiorul meniului in stanga sus -->
+        <button class="close-menu-btn" id="closeMenuBtn" aria-label="Close Menu">
+            <span></span>
+            <span></span>
+        </button>
+
+        <div class="menu-links">
+            <a href="#about" class="nav-link" onclick="toggleMenu()">About</a>
+            <a href="#skills" class="nav-link" onclick="toggleMenu()">Skills</a>
+            <a href="#projects" class="nav-link" onclick="toggleMenu()">Projects</a>
+            <a href="#contact" class="nav-link" onclick="toggleMenu()">Contact</a>
+        </div>
+
+        <!-- Buton WhatsApp în meniu -->
+        <div style="margin-top: 2rem;">
+            <a href="https://wa.me/40775294986?text=Hi%20Mihai,%20I%20saw%20your%20portfolio%20on%20mihai.studio%20and%20I%20would%20like%20to%20discuss%20a%20project!" 
+               target="_blank" 
+               class="btn" 
+               style="background: #25D366; color: #fff; display: inline-flex; align-items: center; gap: 10px; padding: 12px 35px; font-size: 1rem; border-radius: 50px; box-shadow: 0 4px 20px rgba(37, 211, 102, 0.3); text-decoration: none;">
+                <span style="font-size: 1.3rem;"></span> Chat on WhatsApp
+            </a>
+        </div>
     </div>
 
     <div class="container">
@@ -587,12 +618,12 @@
                         </p>
                     </div>
             
-                    <!-- BUTONUL DE WHATSAPP (Schimba 407xxxxxxxx cu numarul tau) -->
+                    <!-- BUTONUL DE WHATSAPP PRINCIPAL -->
                     <a href="https://wa.me/40775294986?text=Hi%20Mihai,%20I%20saw%20your%20portfolio%20on%20mihai.studio%20and%20I%20would%20like%20to%20discuss%20a%20project!" 
                        target="_blank" 
                        class="btn" 
                        style="background: #25D366; color: #fff; display: inline-flex; align-items: center; gap: 10px; padding: 15px 40px; font-size: 1.1rem; border-radius: 50px; box-shadow: 0 4px 20px rgba(37, 211, 102, 0.3); text-decoration: none;">
-                        <span style="font-size: 1.4rem;">💬</span> Chat on WhatsApp
+                        <span style="font-size: 1.4rem;"></span> Chat on WhatsApp
                     </a>
             
                     <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 1rem;">
@@ -611,23 +642,22 @@
         </div>
     </footer>
 
-    <!-- Interactivitate JavaScript Actualizata -->
+    <!-- Interactivitate JavaScript Actualizată -->
     <script>
         const burgerBtn = document.getElementById('burgerBtn');
+        const closeMenuBtn = document.getElementById('closeMenuBtn');
         const sideMenu = document.getElementById('sideMenu');
-        const menuOverlay = document.getElementById('menuOverlay');
 
         function toggleMenu() {
             burgerBtn.classList.toggle('active');
             sideMenu.classList.toggle('open');
-            menuOverlay.classList.toggle('show');
         }
 
-        // Deschide/Inchide cand apesi pe burger
+        // Deschide/închide din butonul burger principal
         burgerBtn.addEventListener('click', toggleMenu);
 
-        // Inchide cand apesi pe fundalul semi-transparent (in afara meniului)
-        menuOverlay.addEventListener('click', toggleMenu);
+        // Închide la apăsarea butonului dedicat de X din interiorul meniului
+        closeMenuBtn.addEventListener('click', toggleMenu);
     </script>
 
 </body>
