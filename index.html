@@ -28,9 +28,17 @@
             background-color: var(--bg-dark);
             color: var(--text-main);
             overflow-x: hidden;
+            /* Opacitatea liniilor pentru hexagoane a fost mărită la 0.09 pentru o vizibilitate sporită */
             background-image: 
                 radial-gradient(circle at 10% 20%, rgba(99, 102, 241, 0.15) 0%, transparent 40%),
-                radial-gradient(circle at 90% 80%, rgba(6, 182, 212, 0.1) 0%, transparent 50%);
+                radial-gradient(circle at 90% 80%, rgba(6, 182, 212, 0.1) 0%, transparent 50%),
+                radial-gradient(circle, transparent 20%, var(--bg-dark) 20%, var(--bg-dark) 80%, transparent 80%, transparent),
+                radial-gradient(circle, transparent 20%, var(--bg-dark) 20%, var(--bg-dark) 80%, transparent 80%, transparent),
+                linear-gradient(30deg, transparent 24%, rgba(99, 102, 241, 0.09) 25%, rgba(99, 102, 241, 0.09) 26%, transparent 27%, transparent 74%, rgba(6, 182, 212, 0.09) 75%, rgba(6, 182, 212, 0.09) 76%, transparent 77%),
+                linear-gradient(150deg, transparent 24%, rgba(99, 102, 241, 0.09) 25%, rgba(99, 102, 241, 0.09) 26%, transparent 27%, transparent 74%, rgba(6, 182, 212, 0.09) 75%, rgba(6, 182, 212, 0.09) 76%, transparent 77%),
+                linear-gradient(270deg, transparent 24%, rgba(6, 182, 212, 0.09) 25%, rgba(6, 182, 212, 0.09) 26%, transparent 27%, transparent 74%, rgba(99, 102, 241, 0.09) 75%, rgba(99, 102, 241, 0.09) 76%, transparent 77%);
+            background-size: cubic-bezier(0,0,0,0), cubic-bezier(0,0,0,0), 60px 104px, 60px 104px, 60px 104px, 60px 104px, 60px 104px;
+            background-position: 0 0, 0 0, 0 0, 30px 52px, 0 0, 0 0, 0 0;
         }
 
         /* Fixed Navigation Header */
@@ -243,12 +251,12 @@
         .btn-primary {
             background: var(--gradient-primary);
             color: #fff;
-            box-shadow: 0 4px 20px rgba(99, 102, 241, 0.3);
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
         }
 
         .btn-primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 25px rgba(99, 102, 241, 0.5);
+            box-shadow: 0 6px 20px rgba(99, 102, 241, 0.5);
         }
 
         .btn-secondary {
@@ -394,7 +402,7 @@
             gap: 15px;
         }
 
-        /* Stil modificat pentru un buton de Live Demo mai mare */
+        /* Stil pentru un buton de Live Demo mai mare */
         .project-link-large {
             background: var(--gradient-primary);
             color: #fff;
@@ -465,24 +473,19 @@
 </head>
 <body>
 
-    <!-- Header / Navigation -->
     <header>
         <div class="nav-container">
-            <!-- Left Side Burger Button -->
             <button class="burger-btn" id="burgerBtn" aria-label="Toggle Menu">
                 <span></span>
                 <span></span>
                 <span></span>
             </button>
             
-            <!-- Centered Logo -->
             <div class="logo">Mihai Studio</div>
         </div>
     </header>
 
-    <!-- Full-Screen Overlay Menu -->
     <div class="side-menu" id="sideMenu">
-        <!-- BUTON NOU: X-ul din interiorul meniului in stanga sus -->
         <button class="close-menu-btn" id="closeMenuBtn" aria-label="Close Menu">
             <span></span>
             <span></span>
@@ -495,7 +498,6 @@
             <a href="#contact" class="nav-link" onclick="toggleMenu()">Contact</a>
         </div>
 
-        <!-- Buton WhatsApp în meniu -->
         <div style="margin-top: 2rem;">
             <a href="https://wa.me/40000000000?text=Hi%20Mihai,%20I%20saw%20your%20portfolio%20on%20mihai.studio%20and%20I%20would%20like%20to%20discuss%20a%20project!" 
                target="_blank" 
@@ -508,7 +510,6 @@
 
     <div class="container">
         
-        <!-- Hero Section -->
         <section class="hero" id="about">
             <div class="hero-badge">Available for freelance</div>
             <h1>Hi, I'm <span>Mihai Cojocar</span>.<br>I craft high-end web experiences.</h1>
@@ -519,7 +520,6 @@
             </div>
         </section>
 
-        <!-- Skills Section -->
         <section id="skills">
             <div class="section-header">
                 <h2>My Core Expertise</h2>
@@ -544,16 +544,13 @@
             </div>
         </section>
 
-        <!-- Projects Section -->
         <section id="projects">
             <div class="section-header">
                 <h2>Example Sites</h2>
                 <p>A showcase of websites I engineered from scratch.</p>
             </div>
             <div class="projects-grid">
-                <!-- Project 1 -->
                 <div class="project-card">
-                    <!-- Imaginea de sus a fost eliminata complet din structura -->
                     <div class="project-content">
                         <div class="project-tags">
                             <span class="tag">HTML5</span>
@@ -563,15 +560,28 @@
                         <h3>The Honeycomb Studio</h3>
                         <p>A fast, sleek digital storefront UI focusing on micro-interactions and seamless user experience.</p>
                         <div class="project-links">
-                            <!-- Butonul de Live Demo este acum marit si linkul de GitHub a fost scos -->
                             <a href="honeycomb.html" target="_blank" class="project-link-large">Live Demo →</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="project-card">
+                    <div class="project-content">
+                        <div class="project-tags">
+                            <span class="tag">HTML5</span>
+                            <span class="tag">CSS3</span>
+                            <span class="tag">JS</span>
+                        </div>
+                        <h3>Aircon</h3>
+                        <p>A professional and highly responsive presentation platform built for modern ventilation and air conditioning systems.</p>
+                        <div class="project-links">
+                            <a href="aircon.html" target="_blank" class="project-link-large">Live Demo →</a>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Contact Section -->
         <section id="contact">
             <div class="section-header">
                 <h2>Get In Touch</h2>
@@ -587,7 +597,6 @@
                         </p>
                     </div>
             
-                    <!-- BUTONUL DE WHATSAPP PRINCIPAL -->
                     <a href="https://wa.me/40000000000?text=Hi%20Mihai,%20I%20saw%20your%20portfolio%20on%20mihai.studio%20and%20I%20would%20like%20to%20discuss%20a%20project!" 
                        target="_blank" 
                        class="btn" 
@@ -604,14 +613,12 @@
 
     </div>
 
-    <!-- Footer -->
     <footer>
         <div class="container">
             <p>&copy; 2026 mihai.studio. Handcrafted with passion.</p>
         </div>
     </footer>
 
-    <!-- Interactivitate JavaScript Actualizată -->
     <script>
         const burgerBtn = document.getElementById('burgerBtn');
         const closeMenuBtn = document.getElementById('closeMenuBtn');
