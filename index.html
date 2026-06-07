@@ -256,7 +256,7 @@
 
         .btn-primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(99, 102, 241, 0.5);
+            box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
         }
 
         .btn-secondary {
@@ -462,6 +462,99 @@
             line-height: 1.6;
         }
 
+        /* Pop-up / Modal pentru Site-Map */
+        .sitemap-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(5, 8, 17, 0.95);
+            backdrop-filter: blur(20px);
+            z-index: 2000; /* Stă peste meniul burger și header */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+            padding: 2rem;
+        }
+
+        .sitemap-modal.open {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .sitemap-content {
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 3rem;
+            max-width: 600px;
+            width: 100%;
+            position: relative;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6);
+        }
+
+        .close-sitemap-btn {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            background: none;
+            border: none;
+            color: var(--text-main);
+            font-size: 1.5rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .close-sitemap-btn:hover {
+            color: var(--accent-cyan);
+        }
+
+        .sitemap-content h2 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .sitemap-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .sitemap-column h3 {
+            font-size: 1.1rem;
+            color: #fff;
+            margin-bottom: 10px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 5px;
+        }
+
+        .sitemap-column ul {
+            list-style: none;
+        }
+
+        .sitemap-column ul li {
+            margin-bottom: 8px;
+        }
+
+        .sitemap-column ul li a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.3s;
+        }
+
+        .sitemap-column ul li a:hover {
+            color: var(--accent-cyan);
+        }
+
         /* Footer */
         footer {
             border-top: 1px solid rgba(255, 255, 255, 0.05);
@@ -470,6 +563,22 @@
             text-align: center;
             color: var(--text-muted);
             font-size: 0.9rem;
+        }
+
+        .btn-sitemap {
+            background: none;
+            border: none;
+            color: var(--accent-cyan);
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-top: 10px;
+            transition: opacity 0.3s;
+            text-decoration: underline;
+        }
+
+        .btn-sitemap:hover {
+            opacity: 0.8;
         }
 
         /* Responsive Settings */
@@ -481,6 +590,7 @@
         @media (max-width: 600px) {
             .hero h1 { font-size: 2.3rem; }
             .contact-info { padding: 2rem; }
+            .sitemap-grid { grid-template-columns: 1fr; gap: 20px; }
         }
     </style>
 </head>
@@ -518,6 +628,31 @@
                style="background: #25D366; color: #fff; display: inline-flex; align-items: center; gap: 10px; padding: 12px 35px; font-size: 1rem; border-radius: 50px; box-shadow: 0 4px 20px rgba(37, 211, 102, 0.3); text-decoration: none;">
                 <span style="font-size: 1.3rem;"></span> Chat on WhatsApp
             </a>
+        </div>
+    </div>
+
+    <div class="sitemap-modal" id="sitemapModal">
+        <div class="sitemap-content">
+            <button class="close-sitemap-btn" id="closeSitemapBtn" aria-label="Close Site-Map">&times;</button>
+            <h2>Site Navigation Map</h2>
+            <div class="sitemap-grid">
+                <div class="sitemap-column">
+                    <h3>Main Portfolio</h3>
+                    <ul>
+                        <li><a href="#about" onclick="toggleSitemap()">Home / About</a></li>
+                        <li><a href="#skills" onclick="toggleSitemap()">My Expertise</a></li>
+                        <li><a href="#projects" onclick="toggleSitemap()">Example Sites</a></li>
+                        <li><a href="#contact" onclick="toggleSitemap()">Contact Me</a></li>
+                    </ul>
+                </div>
+                <div class="sitemap-column">
+                    <h3>Live Examples</h3>
+                    <ul>
+                        <li><a href="honeycomb.html" target="_blank">The Honeycomb Studio 🐝</a></li>
+                        <li><a href="aircon.html" target="_blank">Aircon Platform ❄️</a></li>
+                    </ul>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -625,6 +760,7 @@
     <footer>
         <div class="container">
             <p>&copy; 2026 mihai.studio. Handcrafted with passion.</p>
+            <button class="btn-sitemap" id="openSitemapBtn">Open Site-Map</button>
         </div>
     </footer>
 
@@ -632,14 +768,28 @@
         const burgerBtn = document.getElementById('burgerBtn');
         const closeMenuBtn = document.getElementById('closeMenuBtn');
         const sideMenu = document.getElementById('sideMenu');
+        
+        // Selectori noi pentru modalul Site-Map
+        const openSitemapBtn = document.getElementById('openSitemapBtn');
+        const closeSitemapBtn = document.getElementById('closeSitemapBtn');
+        const sitemapModal = document.getElementById('sitemapModal');
 
         function toggleMenu() {
             burgerBtn.classList.toggle('active');
             sideMenu.classList.toggle('open');
         }
 
+        function toggleSitemap() {
+            sitemapModal.classList.toggle('open');
+        }
+
+        // Evenimente pentru meniul Burger
         burgerBtn.addEventListener('click', toggleMenu);
         closeMenuBtn.addEventListener('click', toggleMenu);
+
+        // Evenimente noi pentru deschiderea/închiderea modalului Site-Map
+        openSitemapBtn.addEventListener('click', toggleSitemap);
+        closeSitemapBtn.addEventListener('click', toggleSitemap);
     </script>
 
 </body>
