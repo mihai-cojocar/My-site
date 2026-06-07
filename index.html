@@ -358,6 +358,8 @@
             overflow: hidden;
             border: 1px solid rgba(255, 255, 255, 0.03);
             transition: transform 0.3s, border-color 0.3s;
+            display: flex;
+            flex-direction: column;
         }
 
         .project-card:hover {
@@ -365,24 +367,31 @@
             border-color: rgba(6, 182, 212, 0.3);
         }
 
+        /* Stil pentru spațiul dedicat pozelor reale din interiorul cardurilor */
+        .project-image-container {
+            width: 100%;
+            height: 200px;
+            overflow: hidden;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .project-image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .project-card:hover .project-image-container img {
+            transform: scale(1.05);
+        }
+
         .project-content {
             padding: 2.5rem 2rem;
-        }
-
-        .project-tags {
+            flex-grow: 1;
             display: flex;
-            gap: 8px;
-            margin-bottom: 1rem;
-            flex-wrap: wrap;
-        }
-
-        .tag {
-            background: rgba(255, 255, 255, 0.05);
-            color: var(--accent-cyan);
-            padding: 4px 10px;
-            border-radius: 4px;
-            font-size: 0.8rem;
-            font-weight: 600;
+            flex-direction: column;
+            justify-content: space-between;
         }
 
         .project-content h3 {
@@ -400,6 +409,7 @@
         .project-links {
             display: flex;
             gap: 15px;
+            margin-top: auto;
         }
 
         /* Stil pentru un buton de Live Demo mai mare */
@@ -414,6 +424,8 @@
             box-shadow: 0 4px 15px rgba(99, 102, 241, 0.2);
             transition: all 0.3s ease;
             display: inline-block;
+            text-align: center;
+            width: 100%;
         }
 
         .project-link-large:hover {
@@ -463,6 +475,7 @@
         /* Responsive Settings */
         @media (max-width: 900px) {
             .hero h1 { font-size: 2.8rem; }
+            .projects-grid { grid-template-columns: 1fr; }
         }
 
         @media (max-width: 600px) {
@@ -551,12 +564,10 @@
             </div>
             <div class="projects-grid">
                 <div class="project-card">
+                    <div class="project-image-container">
+                        <img src="imagini/honeycomb_preview.jpg" alt="The Honeycomb Studio Preview">
+                    </div>
                     <div class="project-content">
-                        <div class="project-tags">
-                            <span class="tag">HTML5</span>
-                            <span class="tag">CSS3</span>
-                            <span class="tag">JS</span>
-                        </div>
                         <h3>The Honeycomb Studio</h3>
                         <p>A fast, sleek digital storefront UI focusing on micro-interactions and seamless user experience.</p>
                         <div class="project-links">
@@ -566,12 +577,10 @@
                 </div>
                 
                 <div class="project-card">
+                    <div class="project-image-container">
+                        <img src="imagini/aircon_preview.jpg" alt="Aircon Preview">
+                    </div>
                     <div class="project-content">
-                        <div class="project-tags">
-                            <span class="tag">HTML5</span>
-                            <span class="tag">CSS3</span>
-                            <span class="tag">JS</span>
-                        </div>
                         <h3>Aircon</h3>
                         <p>A professional and highly responsive presentation platform built for modern ventilation and air conditioning systems.</p>
                         <div class="project-links">
@@ -629,10 +638,7 @@
             sideMenu.classList.toggle('open');
         }
 
-        // Deschide/închide din butonul burger principal
         burgerBtn.addEventListener('click', toggleMenu);
-
-        // Închide la apăsarea butonului dedicat de X din interiorul meniului
         closeMenuBtn.addEventListener('click', toggleMenu);
     </script>
 
